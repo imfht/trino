@@ -238,7 +238,11 @@ class RelationPlanner
                 Symbol symbol = symbolAllocator.newSymbol(field);
 
                 outputSymbolsBuilder.add(symbol);
-                columns.put(symbol, analysis.getColumn(field));
+                try {
+                    columns.put(symbol, analysis.getColumn(field));
+                } catch (NullPointerException e) {
+                }
+
             }
 
             List<Symbol> outputSymbols = outputSymbolsBuilder.build();

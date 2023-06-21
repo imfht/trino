@@ -2548,7 +2548,11 @@ class StatementAnalyzer
                         false);
                 fields.add(field);
                 ColumnHandle columnHandle = columnHandles.get(column.getName());
-                checkArgument(columnHandle != null, "Unknown field %s", field);
+                if (columnHandle != null) {
+                    analysis.setColumn(field, columnHandle);
+                    analysis.addSourceColumns(field, ImmutableSet.of(new SourceColumn(tableName, column.getName())));
+                }
+
                 analysis.setColumn(field, columnHandle);
                 analysis.addSourceColumns(field, ImmutableSet.of(new SourceColumn(tableName, column.getName())));
             }
